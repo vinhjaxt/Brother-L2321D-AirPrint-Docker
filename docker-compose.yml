@@ -1,0 +1,28 @@
+services:
+  cups:
+    image: drpsychick/airprint-bridge:duplex
+    restart: unless-stopped
+    #privileged: true
+    network_mode: host
+    devices:
+      - /dev/bus/usb
+    volumes:
+      #- /dev/bus/usb:/dev/bus/usb
+      #- /dev/usb:/dev/usb
+      #- /run/dbus:/run/dbus
+      - ./airprint-generate.py:/opt/airprint/airprint-generate.py:ro
+    #ports:
+      #- 137:137/udp
+      #- 139:139/tcp
+      #- 445:445/tcp
+      #- 631:631/tcp
+      #- 5353:5353/udp
+    environment:
+      CUPS_WEBINTERFACE: yes
+      CUPS_REMOTE_ADMIN: yes
+      CUPS_ADMIN_PASSWORD: $CUPS_ADMIN_PASSWORD
+      CUPS_SHARE_PRINTERS: yes
+      CUPS_IP: "192.168.1.222"
+      CUPS_LPADMIN_PRINTER1: "lpadmin -D 'Home Printer - Brother HL-L2320D series (Brother HL-L2320D series)' -p 'PrinterY' -m 'drv:///brlaser.drv/brl2320d.ppd' -v 'usb://Brother/HL-L2320D%20series?serial=E73793A5X602751' # -L 'PrinterY' -o printer-is-shared=true "
+      CUPS_LPADMIN_PRINTER1_ENABLE: "cupsenable 'PrinterY'"
+      CUPS_LPADMIN_PRINTER1_ACCEPT: "cupsaccept 'PrinterY'"
