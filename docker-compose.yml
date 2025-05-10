@@ -2,15 +2,19 @@ services:
   cups:
     image: drpsychick/airprint-bridge:duplex
     restart: unless-stopped
-    #privileged: true
     network_mode: host
+
     devices:
       - /dev/bus/usb
-    volumes:
+
+    # mount usb
+    #privileged: true
+    #volumes:
       #- /dev/bus/usb:/dev/bus/usb
       #- /dev/usb:/dev/usb
       #- /run/dbus:/run/dbus
-      - ./airprint-generate.py:/opt/airprint/airprint-generate.py:ro
+      #- ./airprint-generate.py:/opt/airprint/airprint-generate.py:ro
+
     #ports:
       #- 137:137/udp
       #- 139:139/tcp
